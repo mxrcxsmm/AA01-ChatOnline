@@ -12,11 +12,18 @@ $user_id = $_SESSION['user_id'];
 $requests = [];
 
 // Obtiene las solicitudes de amistad pendientes
-$query = "SELECT solicitud_amistad.id_solicitudAmistad AS id, usuario.usuario AS username, usuario.nombre AS real_name 
+$query = "SELECT solicitud_amistad.id_solicitudAmistad AS id, 
+                 usuario.usuario AS username, 
+                 usuario.nombre AS real_name 
           FROM solicitud_amistad 
           JOIN usuario ON solicitud_amistad.id_usuario_enviado = usuario.id_usuario 
-          WHERE solicitud_amistad.id_usuario_recibido = '$user_id' AND solicitud_amistad.status = 'pending'";
-$result = mysqli_query($conn, $query);
+          WHERE solicitud_amistad.id_usuario_recibido = ? AND solicitud_amistad.status = 'pending'";
+
+// Prepara la consulta para evitar inyecciones SQL
+$stmt = mysqli_prepare($conn, $query);
+mysqli_stmt_bind_param($stmt, 'i', $user_id); // 'i' indica que el parámetro es un entero
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
 
 // Verifica si hay errores en la consulta
 if (!$result) {
@@ -56,5 +63,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     <?php else: ?>
         <p>No tienes solicitudes de amistad pendientes.</p>
     <?php endif; ?>
+
+    <a href="../view/index.php">Volver al inicio</a> <!-- Agregué un enlace para volver al inicio -->
 </body>
 </html>
