@@ -22,10 +22,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $_SESSION['mensaje'] = "Bienvenido, " . $row['nombre'] . "!";
                 header("Location: index.php"); // Redirigir a una página de bienvenida
                 exit();
+            } else {
+                $_SESSION['error'] = "Contraseña incorrecta.";
             }
+        } else {
+            $_SESSION['error'] = "Usuario no encontrado.";
         }
-    }else{
-        echo "Rellena los campos";
+    } else {
+        $_SESSION['error'] = "Rellena todos los campos.";
     }
 }
 ?>
@@ -42,12 +46,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
     <form action="login.php" method="POST">
         <label for="usuario">Usuario:</label>
-        <input type="text" id="usuario" name="usuario">
+        <input type="text" id="usuario" name="usuario" required>
         <label for="psswrd">Contraseña:</label>
-        <input type="password" id="psswrd" name="psswrd">
+        <input type="password" id="psswrd" name="psswrd" required>
         <input type="submit" value="Iniciar Sesión">
     </form>
     <p>¿No tienes cuenta? <a href="register.php">Regístrate aquí</a>.</p>
+
+    <?php
+    // Mostrar mensajes de error o de éxito
+    if (isset($_SESSION['error'])) {
+        echo "<p style='color: red;'>" . $_SESSION['error'] . "</p>";
+        unset($_SESSION['error']);
+    }
+    ?>
 </body>
 
 </html>
