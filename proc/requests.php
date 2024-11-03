@@ -64,6 +64,6 @@ while ($row = mysqli_fetch_assoc($result)) {
         <p>No tienes solicitudes de amistad pendientes.</p>
     <?php endif; ?>
 
-    <a href="../view/index.php">Volver al inicio</a> <!-- Agregué un enlace para volver al inicio -->
+    <a href="../index.php">Volver al inicio</a>
 </body>
 </html>
