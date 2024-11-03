@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 require '../bd/conexion.php';
@@ -14,7 +13,7 @@ require '../bd/conexion.php';
 </head>
 
 <body>
-    <form action="../Validaciones/Login-Register/validacion.php" method="POST">
+    <form action="../Validaciones/Login-Register/validacionReg.php" method="POST">
         <div>
             <label>Usuario:</label>
             <input type="text" name="usuario" value="<?php echo isset($_SESSION['usuario']) ? htmlspecialchars($_SESSION['usuario']) : ''; ?>">
@@ -45,4 +44,5 @@ require '../bd/conexion.php';
     unset($_SESSION['psswrdError']);
     ?>
 </body>
+
 </html>
