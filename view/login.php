@@ -10,45 +10,46 @@ require '../bd/conexion.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sesión</title>
+    <link rel="stylesheet" href="../css/login.css">
 </head>
 
 <body>
-    <form action="../Validaciones/Login-Register/validacionLog.php" method="POST">
-        <div>
-            <label for="usuario">Usuario:</label>
-            <input type="text" id="usuario" name="usuario" value="<?php echo isset($_SESSION['usuario']) ? htmlspecialchars($_SESSION['usuario']) : ''; ?>">
-            <?php if (isset($_SESSION['loginUsuarioError'])) : ?>
-                <p style="color: red;"><?php echo $_SESSION['loginUsuarioError']; ?></p>
-            <?php endif; ?>
+    <div class="container">
+        <div class="left-section">
+            <img src="../img/logo.png" alt="Logo" class="logo">
         </div>
 
-        <div>
-            <label for="psswrd">Contraseña:</label>
-            <input type="password" id="psswrd" name="psswrd">
-            <?php if (isset($_SESSION['loginPsswrdError'])) : ?>
-                <p style="color: red;"><?php echo $_SESSION['loginPsswrdError']; ?></p>
-            <?php endif; ?>
-        </div>
-        <!-- Mostrar el mensaje de error genérico -->
-        <?php if (isset($_SESSION['loginError'])) : ?>
-            <p style="color: red;"><?php echo $_SESSION['loginError']; ?></p>
-        <?php endif; ?>
+        <div class="right-section">
+            <form action="../Validaciones/Login-Register/validacionLog.php" method="POST">
+                <div>
+                    <label for="usuario">Usuario:</label>
+                    <input type="text" id="usuario" name="usuario" value="<?php echo isset($_SESSION['usuario']) ? htmlspecialchars($_SESSION['usuario']) : ''; ?>">
+                    <?php if (isset($_SESSION['loginUsuarioError'])) : ?>
+                        <p class="error-message"><?php echo $_SESSION['loginUsuarioError']; ?></p>
+                    <?php endif; ?>
+                </div>
 
-        <?php
-        // Mostrar mensajes de error o de éxito
-        if (isset($_SESSION['error'])) {
-            echo "<p style='color: red;'>" . $_SESSION['error'] . "</p>";
-            unset($_SESSION['error']);
-        }
-        ?>
-        <input type="submit" value="Iniciar Sesión">
-    </form>
-    <p>¿No tienes cuenta? <a href="register.php">Regístrate aquí</a>.</p>
+                <div>
+                    <label for="psswrd">Contraseña:</label>
+                    <input type="password" id="psswrd" name="psswrd">
+                    <?php if (isset($_SESSION['loginPsswrdError'])) : ?>
+                        <p class="error-message"><?php echo $_SESSION['loginPsswrdError']; ?></p>
+                    <?php endif; ?>
+                </div>
+
+                <?php if (isset($_SESSION['loginError'])) : ?>
+                    <p class="error-message"><?php echo $_SESSION['loginError']; ?></p>
+                <?php endif; ?>
+
+                <input type="submit" value="Iniciar Sesión">
+                <p>¿No tienes cuenta? <a href="register.php">Regístrate aquí</a>.</p>
+            </form>
+        </div>
+    </div>
 </body>
 
 </html>
 
 <?php
-// Limpiar las variables de sesión después de mostrar los errores
 unset($_SESSION['loginUsuarioError'], $_SESSION['loginPsswrdError'], $_SESSION['loginError']);
 ?>
