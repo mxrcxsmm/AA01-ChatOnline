@@ -1,0 +1,74 @@
+/* chat.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f2f5;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    /* Tomar toda la altura de la ventana */
+}
+
+.card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 22px;
+    /* Aumentar el padding */
+    width: 330px;
+    /* Aumentar el ancho de la tarjeta */
+    text-align: center;
+}
+
+h2 {
+    color: #333;
+    font-size: 22px;
+    /* Aumentar tamaño del título */
+}
+
+#amigos-lista-ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#amigos-lista-ul li {
+    padding: 9px 0;
+    /* Aumentar padding en la lista */
+    border-bottom: 1px solid #eee;
+}
+
+#amigos-lista-ul a {
+    text-decoration: none;
+    color: #007bff;
+    font-size: 18px;
+    /* Aumentar tamaño de texto en la lista */
+}
+
+#amigos-lista-ul a:hover {
+    text-decoration: underline;
+}
+
+.button {
+    display: inline-block;
+    margin-top: 22px;
+    /* Aumentar margen superior del botón */
+    padding: 11px 16px;
+    /* Aumentar padding del botón */
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 18px;
+    /* Aumentar tamaño de texto del botón */
+}
+
+.button:hover {
+    background-color: #0056b3;
+}

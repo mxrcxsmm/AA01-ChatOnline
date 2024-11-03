@@ -1,0 +1,70 @@
+/* navbar.css */
+body {
+    margin: 0;
+}
+
+.navbar {
+    background-color: #007bff;
+    /* Color de fondo */
+    color: white;
+    /* Color del texto */
+    position: fixed;
+    /* Fija la navbar en la parte superior */
+    top: 0;
+    /* Posición superior */
+    left: 0;
+    /* Posición izquierda */
+    right: 0;
+    /* Posición derecha */
+    z-index: 1000;
+    /* Asegura que la navbar esté encima de otros elementos */
+}
+
+.navbar-content {
+    display: flex;
+    /* Utiliza flexbox para alinear el contenido */
+    justify-content: space-between;
+    /* Espacia los elementos */
+    align-items: center;
+    /* Centra verticalmente los elementos */
+    padding: 10px 20px;
+    /* Espaciado interno */
+}
+
+.navbar-brand {
+    font-size: 24px;
+    /* Tamaño de la marca */
+    text-decoration: none;
+    /* Sin subrayado */
+    color: white;
+    /* Color del texto de la marca */
+}
+
+.navbar-links {
+    display: flex;
+    /* Utiliza flexbox para alinear los enlaces */
+    gap: 15px;
+    /* Espacio entre los enlaces */
+}
+
+.navbar-links a {
+    text-decoration: none;
+    /* Sin subrayado */
+    color: white;
+    /* Color del texto */
+    font-size: 18px;
+    /* Tamaño de los enlaces */
+    padding: 10px 15px;
+    /* Añadir espaciado interno al enlace */
+    border-radius: 5px;
+    /* Bordes redondeados */
+    transition: background-color 0.3s;
+    /* Transición suave para el cambio de color */
+}
+
+.navbar-links a:hover {
+    background-color: #0056b3;
+    /* Azul más oscuro al pasar el ratón */
+    color: white;
+    /* Mantiene el color del texto */
+}
