@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['mensaje'] = "Registro exitoso. Puedes iniciar sesión.";
             unset($_SESSION['usuario']); // Limpiar la sesión
             unset($_SESSION['nombre']); // Limpiar la sesión
-            header("Location: ../../view/login.php");
+            header("Location: ../../index.php");
             exit();
         } else {
             $_SESSION['error'] = "Error: " . mysqli_error($conn);

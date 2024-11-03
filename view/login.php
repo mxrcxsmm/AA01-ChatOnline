@@ -29,15 +29,21 @@ require '../bd/conexion.php';
                 <p style="color: red;"><?php echo $_SESSION['loginPsswrdError']; ?></p>
             <?php endif; ?>
         </div>
+        <!-- Mostrar el mensaje de error genérico -->
+        <?php if (isset($_SESSION['loginError'])) : ?>
+            <p style="color: red;"><?php echo $_SESSION['loginError']; ?></p>
+        <?php endif; ?>
 
+        <?php
+        // Mostrar mensajes de error o de éxito
+        if (isset($_SESSION['error'])) {
+            echo "<p style='color: red;'>" . $_SESSION['error'] . "</p>";
+            unset($_SESSION['error']);
+        }
+        ?>
         <input type="submit" value="Iniciar Sesión">
     </form>
     <p>¿No tienes cuenta? <a href="register.php">Regístrate aquí</a>.</p>
-
-    <!-- Mostrar el mensaje de error genérico -->
-    <?php if (isset($_SESSION['loginError'])) : ?>
-        <p style="color: red;"><?php echo $_SESSION['loginError']; ?></p>
-    <?php endif; ?>
 </body>
 
 </html>

@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $_SESSION['user_id'] = $row['id_usuario'];
                 $_SESSION['usuario'] = $row['usuario'];
                 $_SESSION['mensaje'] = "Bienvenido, " . $row['nombre'] . "!";
-                header("Location: index.php");
+                header("Location: ../../index.php");
                 exit();
             } else {
                 // Contraseña incorrecta
