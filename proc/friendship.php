@@ -12,12 +12,12 @@ $user_id = $_SESSION['user_id'];
 $friends = [];
 
 // Obtiene los amigos del usuario actual
-$query = "SELECT usuario.usuario AS username, usuario.nombre AS real_name 
+$query = "SELECT usuario.id_usuario, usuario.usuario AS username, usuario.nombre AS real_name 
           FROM amistad
           JOIN usuario ON (amistad.id_usuario1 = usuario.id_usuario OR amistad.id_usuario2 = usuario.id_usuario)
           WHERE (amistad.id_usuario1 = '$user_id' OR amistad.id_usuario2 = '$user_id')
           AND usuario.id_usuario != '$user_id'";
-          
+
 $result = mysqli_query($conn, $query);
 
 while ($row = mysqli_fetch_assoc($result)) {
@@ -27,26 +27,48 @@ while ($row = mysqli_fetch_assoc($result)) {
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Mis Amigos</title>
-    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/lista.css"> 
+    <link rel="stylesheet" href="../css/navbar.css"> 
 </head>
+
 <body>
-    <h2>Mis Amigos</h2>
-
-    <?php if (!empty($friends)): ?>
-        <ul>
-            <?php foreach ($friends as $friend): ?>
-                <li>
-                    <?php echo htmlspecialchars($friend['username']); ?> (<?php echo htmlspecialchars($friend['real_name']); ?>)
-                </li>
-            <?php endforeach; ?>
-        </ul>
-    <?php else: ?>
-        <p>No tienes amigos en tu lista actualmente.</p>
-    <?php endif; ?>
-
-    <a href="../index.php">Volver al inicio</a>
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="../index.php" class="navbar-brand">
+                <img src="../img/logo.png" alt="Logo" style="height: 40px;"> <!-- Ajusta la ruta y la altura según tus necesidades -->
+            </a>
+            <div class="navbar-links">
+                <a href="../proc/search_users.php">Buscar Usuarios</a>
+                <a href="../proc/manage_request.php">Ver Solicitudes</a>
+                <a href="../proc/friendship.php">Amistades</a>
+                <a href="../proc/chat.php">Chat</a>
+                <a href="../proc/logout.php">Cerrar Sesión</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="card">
+            <h2>Lista de Amigos</h2>
+            <ul id="amigos-lista-ul">
+                <?php if (!empty($friends)): ?>
+                    <?php foreach ($friends as $friend): ?>
+                        <li>
+                            <a href="chat.php?friend_id=<?php echo htmlspecialchars($friend['id_usuario']); ?>">
+                                <?php echo htmlspecialchars($friend['username']); ?> (<?php echo htmlspecialchars($friend['real_name']); ?>)
+                            </a>
+                        </li>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <p>No tienes amigos en tu lista actualmente.</p>
+                <?php endif; ?>
+            </ul>
+            <a href="../index.php" class="button">Volver al Inicio</a> <!-- Botón para volver al inicio -->
+        </div>
+    </div>
 </body>
+
 </html>

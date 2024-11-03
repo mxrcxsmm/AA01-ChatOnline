@@ -1,0 +1,116 @@
+/* chat.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f2f5;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    /* Usar flexbox para dividir la pantalla */
+    height: 100vh;
+    /* Tomar toda la altura de la ventana */
+}
+
+#amigos-lista {
+    width: 300px;
+    /* Ancho de la lista de amigos */
+    padding: 10px;
+    border-right: 1px solid #ccc;
+    background-color: #fff;
+    overflow-y: auto;
+    /* Permitir desplazamiento si hay muchos amigos */
+}
+
+#chat-area {
+    flex-grow: 1;
+    /* Ocupa el espacio restante */
+    padding: 20px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    /* Alinear elementos de forma vertical */
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+}
+
+#amigos-lista ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#amigos-lista li {
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+}
+
+#amigos-lista a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+#chat-messages {
+    max-height: 400px;
+    /* Ajusta según sea necesario */
+    overflow-y: auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    /* Separar del formulario */
+    display: flex;
+    flex-direction: column;
+    /* Cambia a column para que el último mensaje esté al final */
+}
+
+
+.message {
+    margin-bottom: 10px;
+}
+
+.message strong {
+    color: #333;
+}
+
+.user-message {
+    text-align: right;
+    /* Alinear a la derecha */
+}
+
+.user-message strong {
+    color: red;
+    /* Nombre en rojo */
+}
+
+form {
+    display: flex;
+    justify-content: center;
+}
+
+form textarea {
+    width: 80%;
+    /* Ajustar tamaño del textarea */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: none;
+    /* Evita que el textarea sea redimensionable */
+}
+
+form button {
+    padding: 10px 15px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
