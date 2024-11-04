@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $_SESSION['user_id'] = $row['id_usuario'];
                 $_SESSION['usuario'] = $row['usuario'];
                 $_SESSION['mensaje'] = "Bienvenido, " . $row['nombre'] . "!";
-                header("Location: ../index.php"); // Redirigir a una página de bienvenida
+                header("Location: index.php"); // Redirigir a una página de bienvenida
                 exit();
             } else {
                 $_SESSION['error'] = "Contraseña incorrecta.";
@@ -41,25 +41,46 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sesión</title>
+    <link rel="stylesheet" href="../css/login.css">
 </head>
 
 <body>
-    <form action="login.php" method="POST">
-        <label for="usuario">Usuario:</label>
-        <input type="text" id="usuario" name="usuario" required>
-        <label for="psswrd">Contraseña:</label>
-        <input type="password" id="psswrd" name="psswrd" required>
-        <input type="submit" value="Iniciar Sesión">
-    </form>
-    <p>¿No tienes cuenta? <a href="register.php">Regístrate aquí</a>.</p>
+    <div class="container">
+        <div class="left-section">
+            <img src="../img/logo.png" alt="Logo" class="logo">
+        </div>
 
-    <?php
-    // Mostrar mensajes de error o de éxito
-    if (isset($_SESSION['error'])) {
-        echo "<p style='color: red;'>" . $_SESSION['error'] . "</p>";
-        unset($_SESSION['error']);
-    }
-    ?>
+        <div class="right-section">
+            <form action="../Validaciones/Login-Register/validacionLog.php" method="POST">
+                <div>
+                    <label for="usuario">Usuario:</label>
+                    <input type="text" id="usuario" name="usuario" value="<?php echo isset($_SESSION['usuario']) ? htmlspecialchars($_SESSION['usuario']) : ''; ?>">
+                    <?php if (isset($_SESSION['loginUsuarioError'])) : ?>
+                        <p class="error-message"><?php echo $_SESSION['loginUsuarioError']; ?></p>
+                    <?php endif; ?>
+                </div>
+
+                <div>
+                    <label for="psswrd">Contraseña:</label>
+                    <input type="password" id="psswrd" name="psswrd">
+                    <?php if (isset($_SESSION['loginPsswrdError'])) : ?>
+                        <p class="error-message"><?php echo $_SESSION['loginPsswrdError']; ?></p>
+                    <?php endif; ?>
+                </div>
+
+                <?php if (isset($_SESSION['loginError'])) : ?>
+                    <p class="error-message"><?php echo $_SESSION['loginError']; ?></p>
+                <?php endif; ?>
+
+                <input type="submit" value="Iniciar Sesión">
+                <p>¿No tienes cuenta? <a href="register.php">Regístrate aquí</a>.</p>
+            </form>
+        </div>
+    </div>
 </body>
 
 </html>
+
+<?php
+unset($_SESSION['loginUsuarioError'], $_SESSION['loginPsswrdError'], $_SESSION['loginError']);
+?>
