@@ -10,7 +10,16 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 $friends = [];
+// Elimina la amistad si se ha enviado una solicitud de eliminación
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_friend_id'])) {
+    $friend_id = $_POST['delete_friend_id'];
 
+    // Elimina la amistad de la base de datos
+    $delete_query = "DELETE FROM amistad 
+                     WHERE (id_usuario1 = '$user_id' AND id_usuario2 = '$friend_id') 
+                     OR (id_usuario1 = '$friend_id' AND id_usuario2 = '$user_id')";
+    mysqli_query($conn, $delete_query);
+}
 // Obtiene los amigos del usuario actual
 $query = "SELECT usuario.id_usuario, usuario.usuario AS username, usuario.nombre AS real_name 
           FROM amistad
@@ -31,8 +40,8 @@ while ($row = mysqli_fetch_assoc($result)) {
 <head>
     <meta charset="UTF-8">
     <title>Mis Amigos</title>
-    <link rel="stylesheet" href="../css/lista.css"> 
-    <link rel="stylesheet" href="../css/navbar.css"> 
+    <link rel="stylesheet" href="../css/lista.css">
+    <link rel="stylesheet" href="../css/navbar.css">
 </head>
 
 <body>
@@ -60,6 +69,10 @@ while ($row = mysqli_fetch_assoc($result)) {
                             <a href="chat.php?friend_id=<?php echo htmlspecialchars($friend['id_usuario']); ?>">
                                 <?php echo htmlspecialchars($friend['username']); ?> (<?php echo htmlspecialchars($friend['real_name']); ?>)
                             </a>
+                            <form method="post" action="friendship.php" style="display: inline;">
+                                <input type="hidden" name="delete_friend_id" value="<?php echo htmlspecialchars($friend['id_usuario']); ?>">
+                                <button type="submit" class="button" onclick="return confirm('¿Estás seguro de que deseas eliminar a este amigo?');">Eliminar</button>
+                            </form>
                         </li>
                     <?php endforeach; ?>
                 <?php else: ?>
