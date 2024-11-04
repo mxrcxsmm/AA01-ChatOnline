@@ -29,7 +29,7 @@ if (isset($_POST['search'])) {
     <meta charset="UTF-8">
     <title>Búsqueda de Usuarios</title>
     <link rel="stylesheet" href="../css/buscusu.css">
-    <link rel="stylesheet" href="../css/navbar.css">k
+    <link rel="stylesheet" href="../css/navbar.css">
 </head>
 
 <body>

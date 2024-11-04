@@ -20,7 +20,7 @@ body {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     padding: 22px;
     /* Aumentar el padding */
-    width: 330px;
+    width: 500px;
     /* Aumentar el ancho de la tarjeta */
     text-align: center;
 }

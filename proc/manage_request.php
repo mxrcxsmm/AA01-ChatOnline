@@ -25,17 +25,31 @@ while ($row = mysqli_fetch_assoc($result)) {
 // Procesa la aceptación o rechazo de solicitudes
 if (isset($_POST['accept_request']) && isset($_POST['request_id'])) {
     $request_id = mysqli_real_escape_string($conn, $_POST['request_id']);
-    
+
     // Acepta la solicitud de amistad y actualiza el estado
     $query = "UPDATE solicitud_amistad SET status = 'accepted' WHERE id_solicitudAmistad = '$request_id'";
     if (mysqli_query($conn, $query)) {
-        echo "Solicitud de amistad aceptada.";
+        // Obtiene los IDs de los usuarios para la amistad
+        $query_users = "SELECT id_usuario_enviado, id_usuario_recibido FROM solicitud_amistad WHERE id_solicitudAmistad = '$request_id'";
+        $result_users = mysqli_query($conn, $query_users);
+        $row_users = mysqli_fetch_assoc($result_users);
+
+        $id_usuario_enviado = $row_users['id_usuario_enviado'];
+        $id_usuario_recibido = $row_users['id_usuario_recibido'];
+
+        // Inserta la amistad en la tabla `amistad`
+        $query_insert_friend = "INSERT INTO amistad (id_usuario1, id_usuario2) VALUES ('$id_usuario_enviado', '$id_usuario_recibido')";
+        mysqli_query($conn, $query_insert_friend);
+
+        // Redirecciona a la página principal
+        header('Location: ../index.php');
+        exit();
     } else {
         echo "Error al aceptar la solicitud: " . mysqli_error($conn);
     }
 } elseif (isset($_POST['reject_request']) && isset($_POST['request_id'])) {
     $request_id = mysqli_real_escape_string($conn, $_POST['request_id']);
-    
+
     // Rechaza la solicitud de amistad y actualiza el estado
     $query = "UPDATE solicitud_amistad SET status = 'rejected' WHERE id_solicitudAmistad = '$request_id'";
     if (mysqli_query($conn, $query)) {
@@ -54,8 +68,8 @@ if (isset($_POST['accept_request']) && isset($_POST['request_id'])) {
 <head>
     <meta charset="UTF-8">
     <title>Solicitudes de Amistad</title>
-    <link rel="stylesheet" href="../css/soliAmi.css"> 
-    <link rel="stylesheet" href="../css/navbar.css"> 
+    <link rel="stylesheet" href="../css/soliAmi.css">
+    <link rel="stylesheet" href="../css/navbar.css">
 </head>
 
 <body>
@@ -77,24 +91,26 @@ if (isset($_POST['accept_request']) && isset($_POST['request_id'])) {
         <div class="card">
             <h2>Solicitudes de Amistad Recibidas</h2>
 
-    <?php if (!empty($requests)): ?>
-        <ul>
-            <?php foreach ($requests as $request): ?>
-                <li>
-                    <?php echo htmlspecialchars($request['username']); ?> (<?php echo htmlspecialchars($request['real_name']); ?>)
-                    <form method="post" action="manage_requests.php" style="display: inline;">
-                        <input type="hidden" name="request_id" value="<?php echo $request['id']; ?>">
-                        <button type="submit" name="accept_request">Aceptar</button>
-                        <button type="submit" name="reject_request">Rechazar</button>
-                    </form>
-                </li>
-            <?php endforeach; ?>
-        </ul>
-    <?php else: ?>
-        <p>No tienes solicitudes de amistad pendientes.</p>
-    <?php endif; ?>
+            <?php if (!empty($requests)): ?>
+                <ul id="solicitudes-lista">
+                    <?php foreach ($requests as $request): ?>
+                        <li>
+                            <?php echo htmlspecialchars($request['username']); ?> (<?php echo htmlspecialchars($request['real_name']); ?>)
+                            <form method="post" action="manage_request.php" style="display: inline;">
+                                <input type="hidden" name="request_id" value="<?php echo $request['id']; ?>">
+                                <button type="submit" name="accept_request" class="button">Aceptar</button>
+                                <button type="submit" name="reject_request" class="button">Rechazar</button>
+                            </form>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php else: ?>
+                <p>No tienes solicitudes de amistad pendientes.</p>
+            <?php endif; ?>
 
-    <a href="../view/index.php">Volver al inicio</a>
+            <a href="../index.php" class="button">Volver al inicio</a>
+        </div>
+    </div>
 </body>
 
 </html>
