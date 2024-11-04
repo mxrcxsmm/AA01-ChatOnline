@@ -1,6 +1,37 @@
 <?php
 session_start();
 require '../bd/conexion.php';
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Verifica si los campos están definidos
+    if (isset($_POST['usuario'], $_POST['psswrd'])) {
+        $usuario = mysqli_real_escape_string($conn, $_POST['usuario']);
+        $psswrd = $_POST['psswrd'];
+
+        // Consulta para obtener el usuario y la contraseña
+        $sql = "SELECT * FROM usuario WHERE usuario = '$usuario'";
+        $result = mysqli_query($conn, $sql);
+
+        if ($result && mysqli_num_rows($result) > 0) {
+            $row = mysqli_fetch_assoc($result);
+            // Verifica si la contraseña es correcta
+            if (password_verify($psswrd, $row['passwd'])) {
+                // Almacena información del usuario en la sesión
+                $_SESSION['user_id'] = $row['id_usuario'];
+                $_SESSION['usuario'] = $row['usuario'];
+                $_SESSION['mensaje'] = "Bienvenido, " . $row['nombre'] . "!";
+                header("Location: index.php"); // Redirigir a una página de bienvenida
+                exit();
+            } else {
+                $_SESSION['error'] = "Contraseña incorrecta.";
+            }
+        } else {
+            $_SESSION['error'] = "Usuario no encontrado.";
+        }
+    } else {
+        $_SESSION['error'] = "Rellena todos los campos.";
+    }
+}
 ?>
 
 <!DOCTYPE html>

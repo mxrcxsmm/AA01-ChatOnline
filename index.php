@@ -28,15 +28,13 @@ if (isset($_SESSION['user_id'])) {
             <h1>Bienvenido, <?php echo htmlspecialchars($user['nombre']); ?>!</h1>
             <p>Qué quieres hacer?</p>
 
-            <!-- Opciones de interacción -->
-            <div class="options">
-                <a href="proc/search_users.php">Buscar usuarios</a> |
-                <a href="proc/manage_request.php">Ver solicitudes de amistad</a> |
-                <a href="proc/friendship.php">Amistades</a> |
-                <a href="proc/chat.php">Chat</a> |
-                <a href="proc/logout.php">Cerrar sesión</a>
-            </div>
-        </div>
+        <!-- Opciones de interacción -->
+        <a href="proc/search_users.php">Buscar usuarios</a> |
+        <a href="proc/send_request.php">Solicitudes de amistad</a> |
+        <a href="proc/friendship.php">Amistades</a> |
+        <a href="proc/chat.php">Chat</a> |
+        <a href="proc/logout.php">Cerrar sesión</a>
+
     </body>
 
     </html>
