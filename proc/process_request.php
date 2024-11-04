@@ -31,7 +31,7 @@ if (isset($_POST['accept_request']) || isset($_POST['reject_request'])) {
         if (mysqli_query($conn, $query)) {
             echo "Solicitud de amistad rechazada.";
             // Redirigir de vuelta a la página de solicitudes
-            header('Location: send_request.php'); // Cambia esto según tu estructura
+            header('Location: friendship.php'); // Cambia esto según tu estructura
             exit();
         } else {
             echo "Error al rechazar la solicitud: " . mysqli_error($conn);
